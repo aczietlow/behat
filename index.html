@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Design Systems and Drupal</title>
+
+    <meta name="author" content="Larry Garfield">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="palantir/palantir.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+        document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+
+
+    <style type="text/css">
+
+        ul.inline {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+            text-align: center;
+        }
+
+        ul.inline li {
+            display: inline;
+        }
+
+        /*overwrites a default style that
+        vertically un-centered slides */
+        .reveal .slides>section,
+        .reveal .slides>section>section {
+            padding: 0px;
+        }
+
+        .reveal h2 + p.bigtext,
+        .reveal p + p {
+            margin-top: 1em;
+        }
+
+        .reveal #final p + p {
+            margin-top: 0;
+        }
+
+        .struck {
+            text-decoration: line-through;
+        }
+
+        ul li {
+            list-style-type: none;
+        }
+
+    </style>
+
+    <script src="palantir/classer.js"></script>
+
+</head>
+<body>
+<div class="reveal">
+
+<!-- Any section element inside of this container is displayed as a slide -->
+<div class="slides">
+<section>
+    <h1>Behat</h1>
+    <h3>Behavior Driven Development</h3>
+    <p>
+        Behavior Driven Development - an “outside-in” methodology. It starts at the outside by identifying business outcomes, and then drills down into the feature set that will achieve those outcomes. - Dan North*
+    </p>
+</section>
+
+<section>
+    <h2>Benefits</h2>
+    <ul>
+        <li>Better code quality</li>
+        <li>Less Regression</li>
+        <li>Better Acceptance Criteria</li>
+        <li>Greater understanding of code base</li>
+    </ul>
+    <p>Case studies conducted at Microsoft and IBM indicate that teams that adopt TDD experience 40% to 90% bugs, which results in 15-35% additional development time.</p>
+</section>
+
+
+<section>
+    <section>
+        <h2>Installation</h2>
+        <p>Composer</p>
+                <pre><code data-trim contenteditable>
+                    "require": {
+                    "behat/behat": "2.5.*@stable",
+                    "behat/mink": "1.5.*@stable",
+                    "behat/mink-extension": "*",
+                    "behat/mink-goutte-driver": "*",
+                    "behat/mink-selenium2-driver": "*"
+                    }
+                </code></pre>
+        <p>Behat.yml</p>
+                            <pre><code data-trim contenteditable>
+                                default:
+                                paths:
+                                features: 'acceptance'
+                                extensions:
+                                Behat\MinkExtension\Extension:
+                                goutte: ~
+                                selenium2:
+                                wd_host: "http://127.0.0.1:8643/wd/hub"
+                                base_url: http://scylla.dev
+                            </code></pre>
+    </section>
+    <section>
+        <h2>Behat: Writing features</h2>
+        <p>In BDD everything starts with defining a feature, and then implementing it in code. Features are written using gherkin syntax and saved in a .feature file</p>
+                            <pre><code data-trim contenteditable>
+                                # acceptance/homepage.feature
+
+                                @api
+                                Feature: Homepage.
+                                As a user of Scylla,
+                                I want to see Hello world on the homepage,
+                                so that I know who is responsible for such an awesome product.
+                            </code></pre>
+    </section>
+    <section>
+        <h2>Features</h2>
+        <p>Every feature starts with the same format:</p>
+                            <pre><code data-trim contenteditable>
+                                As a &ltuser role&gt,
+                                I want &ltsome feature&gt,
+                                so that &ltsome benefit&gt.
+                            </code></pre>
+        <p>This section isn't parsed by Behat during testing, but is important in describing the feature in a readable format. Each feature is described by multiple "scenarios" or how that feature will behave under various conditions.</p>
+    </section>
+    <section>
+        <h2>Test Scenarios</h2>
+                            <pre><code data-trim contenteditable>
+                                Scenario: I can see the Hello World on the homepage.
+                                When I am on the homepage
+                                Then I should see the text "Hello World"
+                            </code></pre>
+    </section>
+    <section>
+        <h2>Executing tests</h2>
+    <pre><code data-trim contenteditable>
+        bin/behat
+        bin/behat acceptance/homepage.feature
+        bin/behat --name='I can see the Hello World on the homepage'
+
+        >output
+        @api
+        Feature: Homepage.
+        As a user of Scylla,
+        I want to see the Scylla on the homepage,
+        so that I know who is responsible for such an awesome product.
+
+        Scenario: I can see the Scylla name on the homepage. # acceptance/homepage.feature:7
+        When I am on the homepage                                   # FeatureContext::iAmOnHomepage()
+        Then I should see the text "Scylla"       # FeatureContext::assertTextVisible()
+
+        1 scenario (1 passed)
+        2 steps (2 passed)
+        0m5.685s
+    </code></pre>
+    </section>
+</section>
+
+<section>
+    <section>
+        <h2>Step Definitions</h2>
+        <p>
+            Behat needs to know how to perform each step defined in our features. The mink extensions has added several common step definitions for us out of the box. To see a list of available step definitions run the following:
+        </p>
+                            <pre><code data-trim contenteditable>
+                                bin/behat -dl
+
+                                >output
+                                Given /^(?:|I )am on (?:|the )homepage$/
+                                When /^(?:|I )go to (?:|the )homepage$/
+                            </code></pre>
+    </section>
+    <section>
+        <h2>Step Definitions</h2>
+        <p>Custom step definitions can go in FeatureContext which extends BehatContext given us access to all the defined step definitions from Mink. Consider the following feature scenario.</p>
+                            <pre><code data-trim contenteditable>
+                                Scenario: I can log in to my account.
+                                Given I am on the homepage
+                                When I go to the login page
+                                Then I should see the text "Username"
+                                And I should see the text "Password"
+                            </code></pre>
+    </section>
+    <section>
+        <h2>Step Definitions</h2>
+        <p>f you were to run this test, Behat would tell us that we don't have a step definition for this yet</p>
+    <pre><code data-trim contenteditable>
+        Scenario: I can log in to my account.                         # acceptance/homepage.feature:13
+        Given I am on the homepage                                  # FeatureContext::iAmOnHomepage()
+        When I go to the login page
+        Then I should see the text "Username"                       # FeatureContext::assertTextVisible()
+        And I should see the text "Password"                        # FeatureContext::assertTextVisible()
+
+        1 scenarios (1 undefined)
+        4 steps (1 passed, 2 skipped, 1 undefined)
+        0m9.051s
+
+        You can implement step definitions for undefined steps with these snippets:
+
+        /**
+        * @When /^I go to the login page$/
+        */
+        public function iGoToTheLoginPage() {
+        throw new PendingException();
+        }
+    </code></pre>
+        <p>Behat will generate a code scaffolding to use for our test. which we can further define.</p>
+    </section>
+
+    <section>
+        <h2>The code behind the magic</h2>
+    <pre><code data-trim contenteditable>
+        When I visit the login page
+    </code></pre>
+    <pre><code data-trim contenteditable>
+        /**
+        * @When I visit the login page
+        */
+        public function iAmOnThe()
+        {
+        $this->getSession()->visit('user');
+        }
+    </code></pre>
+    </section>
+    <section>
+        <h2>The code behind the magic</h2>
+        <p>Can even execute code from Drupal</p>
+    <pre><code data-trim contenteditable>
+        Scenario: Confirm the workbench module is installed
+        Given the "workbench" module is installed
+    </code></pre>
+    <pre><code data-trim contenteditable>
+        /**
+        * Asserts that a given module exists and is enabled.
+        *
+        * @Given the :module module is installed
+        */
+        public function assertModuleExists($module)
+        {
+        if (module_exists($module)) {
+        return TRUE;
+        }
+        $message = sprintf('Module "%s" is not installed.', $module);
+        throw new \Exception($message);
+        }
+
+    </code></pre>
+
+
+    </section>
+    <section>
+        <h2>The code behind the test</h2>
+        <p>Testing user workflow</p>
+    <pre><code data-trim contenteditable>
+        @api
+        Feature: Content Type Event
+        As a Guest User
+        I want to view data related to an Event
+        So that I can decide it is something I would like to attend.
+
+        Scenario: Add an event node and verify that the necessary fields exist.
+        Given I am a authenticated user"
+        Given A "event" node:
+        | title | field_description | field_event_location | field_event_date | status |
+        | Name of event | I am a description | Aiken Brew Pub | 2015-01-21 20:30:00 | 1 |
+        When I go to the node url
+        Then I should see the text "Name of event"
+        And I should see the text "I am a description"
+        And I should see the text "Aiken Brew Pub"
+        And I should see the text "Wednesday, January 21, 2015 - 20:30"
+    </code></pre>
+    </section>
+    <section>
+        <h2>Secret recipe</h2>
+        <a href="https://www.drupal.org/project/drupalextension">Drupal Extension</a>
+        <p>We're using the Drupal Extension, which is an integration layer between Mink and Drupal. It provides step definitions specific to Drupal as well as gives us access to making calls to the Drupal code base within tests.</p>
+    </section>
+
+</section>
+</section>
+
+<section>
+    <h2>Doing things in the browser</h2>
+    <p>We use Mink to interact with the browser</p>
+    <p>Some common usages of the Mink API</p>
+                        <pre><code data-trim contenteditable>
+                            $element = $session->getPage();
+
+                            $element->findAll($selector, $locator);
+                            $element->getText();
+                            $element->getHtml();
+
+                            $element->isVisible();
+                            $element->click();
+                            $element->press();
+                            $element->check();
+                            $element->uncheck();
+                        </code></pre>
+    <a href="http://blog.lepine.pro/images/2012-03-behat-cheat-sheet-en.pdf">Mink Cheat Sheet</a>
+</section>
+
+
+<section style="text-align: left;">
+    <h1>THE END</h1>
+    <p>
+        - <a href="http://docs.behat.org/en/v2.5/">Behat Documentation</a> <br>
+        - <a href="https://github.com/aczietlow/Scylla">Behat in a box</a>
+    </p>
+</section>
+
+</div>
+
+</div>
+
+<footer class="palantir-logo">
+    <a href="http://www.palantir.net/"><img src="palantir/palantirnet-logo-4c-reversed.svg" alt="Palantir.net logo" height="37" /></a>
+</footer>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.min.js"></script>
+
+<script>
+
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+    });
+
+</script>
+</body>
+</html>
