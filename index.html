@@ -31,17 +31,6 @@
 
     <style type="text/css">
 
-        ul.inline {
-            margin: 0;
-            padding: 0;
-            list-style-type: none;
-            text-align: center;
-        }
-
-        ul.inline li {
-            display: inline;
-        }
-
         /*overwrites a default style that
         vertically un-centered slides */
         .reveal .slides>section,
@@ -62,8 +51,13 @@
             text-decoration: line-through;
         }
 
-        ul li {
-            list-style-type: none;
+        /* Overrides default style from reveal. */
+        .reveal ul{
+            display: block;
+        }
+
+        ui li{
+            list-style: none;
         }
 
     </style>
@@ -77,104 +71,150 @@
 <!-- Any section element inside of this container is displayed as a slide -->
 <div class="slides">
 <section>
-    <h1>Behat</h1>
-    <h3>Behavior Driven Development</h3>
-    <p>
-        Behavior Driven Development - an “outside-in” methodology. It starts at the outside by identifying business outcomes, and then drills down into the feature set that will achieve those outcomes. - Dan North*
-    </p>
+    <h1>A First look at BDD in Drupal with Behat</h1>
+    <h3>Chris Zietlow \ @aczietlow</h3>
 </section>
 
 <section>
-    <h2>Benefits</h2>
-    <ul>
-        <li>Better code quality</li>
-        <li>Less Regression</li>
-        <li>Better Acceptance Criteria</li>
-        <li>Greater understanding of code base</li>
-    </ul>
-    <p>Case studies conducted at Microsoft and IBM indicate that teams that adopt TDD experience 40% to 90% bugs, which results in 15-35% additional development time.</p>
+    <section>
+        <h2>Why should you bother?</h2>
+        <ul>
+            <li>Better code quality</li>
+            <li>Less Regression</li>
+            <li>Better Acceptance Criteria</li>
+            <li>Greater understanding of code base</li>
+            <li><strong>Faster development</strong></li>
+        </ul>
+        <aside class="notes">
+            Add some notes here.
+
+        </aside>
+    </section>
+    <section>
+        <h2>What is quality anyway?</h2>
+        <img src="assets/code-review.png"/>
+        <aside class="notes">
+            <p>your team should decide what the code quality means to you.</p>
+
+            <ul>
+                <li>Testible</li>
+                <li>Compliant</li>
+                <li>Clear</li>
+                <li>Well Documented</li>
+            </ul>
+
+            One does not simply add quality later
+        </aside>
+    </section>
+    <section>
+        <h2>Faster development you say?</h2>
+        <p>[maybe find a graphic for this] Case studies conducted at Microsoft and IBM indicate that teams that adopt TDD experience 40% to 90% bugs, which results in 15-35% additional development time.</p>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Why your client should care about testing</h2>
+        <ul>
+            <li>Better code quality</li>
+            <li>Less Regression</li>
+            <li>Better Acceptance Criteria</li>
+            <li>Greater understanding of code base</li>
+            <li><strong>Faster development</strong></li>
+        </ul>
+
+        <aside class="notes">
+            <ul>
+                <li>Better product quality - better functioning product</li>
+                <li>Less Regression - Less time going back t fix bugs</li>
+                <li>Better Acceptance Criteria - Product better fits actually business needs</li>
+                <li>Greater understanding of product - </li>
+                <li><strong>Faster development</strong> - more bang for your buck</li>
+            </ul>
+        </aside>
+    </section>
 </section>
 
+<!-- Old Presentation -->
 
 <section>
     <section>
         <h2>Installation</h2>
         <p>Composer</p>
-                <pre><code data-trim contenteditable>
-                    "require": {
-                    "behat/behat": "2.5.*@stable",
-                    "behat/mink": "1.5.*@stable",
-                    "behat/mink-extension": "*",
-                    "behat/mink-goutte-driver": "*",
-                    "behat/mink-selenium2-driver": "*"
-                    }
-                </code></pre>
+<pre><code data-trim contenteditable>
+    "require": {
+    "behat/behat": "2.5.*@stable",
+    "behat/mink": "1.5.*@stable",
+    "behat/mink-extension": "*",
+    "behat/mink-goutte-driver": "*",
+    "behat/mink-selenium2-driver": "*"
+    }
+</code></pre>
         <p>Behat.yml</p>
-                            <pre><code data-trim contenteditable>
-                                default:
-                                paths:
-                                features: 'acceptance'
-                                extensions:
-                                Behat\MinkExtension\Extension:
-                                goutte: ~
-                                selenium2:
-                                wd_host: "http://127.0.0.1:8643/wd/hub"
-                                base_url: http://scylla.dev
-                            </code></pre>
+<pre><code data-trim contenteditable>
+    default:
+    paths:
+    features: 'acceptance'
+    extensions:
+    Behat\MinkExtension\Extension:
+    goutte: ~
+    selenium2:
+    wd_host: "http://127.0.0.1:8643/wd/hub"
+    base_url: http://scylla.dev
+</code></pre>
     </section>
     <section>
         <h2>Behat: Writing features</h2>
         <p>In BDD everything starts with defining a feature, and then implementing it in code. Features are written using gherkin syntax and saved in a .feature file</p>
-                            <pre><code data-trim contenteditable>
-                                # acceptance/homepage.feature
+<pre><code data-trim contenteditable>
+# acceptance/homepage.feature
 
-                                @api
-                                Feature: Homepage.
-                                As a user of Scylla,
-                                I want to see Hello world on the homepage,
-                                so that I know who is responsible for such an awesome product.
-                            </code></pre>
+@api
+Feature: Homepage.
+As a user of Scylla,
+I want to see Hello world on the homepage,
+so that I know who is responsible for such an awesome product.
+</code></pre>
     </section>
     <section>
         <h2>Features</h2>
         <p>Every feature starts with the same format:</p>
-                            <pre><code data-trim contenteditable>
-                                As a &ltuser role&gt,
-                                I want &ltsome feature&gt,
-                                so that &ltsome benefit&gt.
-                            </code></pre>
+<pre><code data-trim contenteditable>
+As a &ltuser role&gt,
+I want &ltsome feature&gt,
+so that &ltsome benefit&gt.
+</code></pre>
         <p>This section isn't parsed by Behat during testing, but is important in describing the feature in a readable format. Each feature is described by multiple "scenarios" or how that feature will behave under various conditions.</p>
     </section>
     <section>
         <h2>Test Scenarios</h2>
-                            <pre><code data-trim contenteditable>
-                                Scenario: I can see the Hello World on the homepage.
-                                When I am on the homepage
-                                Then I should see the text "Hello World"
-                            </code></pre>
+<pre><code data-trim contenteditable>
+    Scenario: I can see the Hello World on the homepage.
+    When I am on the homepage
+    Then I should see the text "Hello World"
+</code></pre>
     </section>
     <section>
         <h2>Executing tests</h2>
-    <pre><code data-trim contenteditable>
-        bin/behat
-        bin/behat acceptance/homepage.feature
-        bin/behat --name='I can see the Hello World on the homepage'
+<pre><code data-trim contenteditable>
+    bin/behat
+    bin/behat acceptance/homepage.feature
+    bin/behat --name='I can see the Hello World on the homepage'
 
-        >output
-        @api
-        Feature: Homepage.
-        As a user of Scylla,
-        I want to see the Scylla on the homepage,
-        so that I know who is responsible for such an awesome product.
+    >output
+    @api
+    Feature: Homepage.
+    As a user of Scylla,
+    I want to see the Scylla on the homepage,
+    so that I know who is responsible for such an awesome product.
 
-        Scenario: I can see the Scylla name on the homepage. # acceptance/homepage.feature:7
-        When I am on the homepage                                   # FeatureContext::iAmOnHomepage()
-        Then I should see the text "Scylla"       # FeatureContext::assertTextVisible()
+    Scenario: I can see the Scylla name on the homepage. # acceptance/homepage.feature:7
+    When I am on the homepage                                   # FeatureContext::iAmOnHomepage()
+    Then I should see the text "Scylla"       # FeatureContext::assertTextVisible()
 
-        1 scenario (1 passed)
-        2 steps (2 passed)
-        0m5.685s
-    </code></pre>
+    1 scenario (1 passed)
+    2 steps (2 passed)
+    0m5.685s
+</code></pre>
     </section>
 </section>
 
@@ -184,48 +224,48 @@
         <p>
             Behat needs to know how to perform each step defined in our features. The mink extensions has added several common step definitions for us out of the box. To see a list of available step definitions run the following:
         </p>
-                            <pre><code data-trim contenteditable>
-                                bin/behat -dl
+<pre><code data-trim contenteditable>
+    bin/behat -dl
 
-                                >output
-                                Given /^(?:|I )am on (?:|the )homepage$/
-                                When /^(?:|I )go to (?:|the )homepage$/
-                            </code></pre>
+    >output
+    Given /^(?:|I )am on (?:|the )homepage$/
+    When /^(?:|I )go to (?:|the )homepage$/
+</code></pre>
     </section>
     <section>
         <h2>Step Definitions</h2>
         <p>Custom step definitions can go in FeatureContext which extends BehatContext given us access to all the defined step definitions from Mink. Consider the following feature scenario.</p>
-                            <pre><code data-trim contenteditable>
-                                Scenario: I can log in to my account.
-                                Given I am on the homepage
-                                When I go to the login page
-                                Then I should see the text "Username"
-                                And I should see the text "Password"
-                            </code></pre>
+<pre><code data-trim contenteditable>
+    Scenario: I can log in to my account.
+    Given I am on the homepage
+    When I go to the login page
+    Then I should see the text "Username"
+    And I should see the text "Password"
+</code></pre>
     </section>
     <section>
         <h2>Step Definitions</h2>
         <p>f you were to run this test, Behat would tell us that we don't have a step definition for this yet</p>
-    <pre><code data-trim contenteditable>
-        Scenario: I can log in to my account.                         # acceptance/homepage.feature:13
-        Given I am on the homepage                                  # FeatureContext::iAmOnHomepage()
-        When I go to the login page
-        Then I should see the text "Username"                       # FeatureContext::assertTextVisible()
-        And I should see the text "Password"                        # FeatureContext::assertTextVisible()
+<pre><code data-trim contenteditable>
+    Scenario: I can log in to my account.                         # acceptance/homepage.feature:13
+    Given I am on the homepage                                  # FeatureContext::iAmOnHomepage()
+    When I go to the login page
+    Then I should see the text "Username"                       # FeatureContext::assertTextVisible()
+    And I should see the text "Password"                        # FeatureContext::assertTextVisible()
 
-        1 scenarios (1 undefined)
-        4 steps (1 passed, 2 skipped, 1 undefined)
-        0m9.051s
+    1 scenarios (1 undefined)
+    4 steps (1 passed, 2 skipped, 1 undefined)
+    0m9.051s
 
-        You can implement step definitions for undefined steps with these snippets:
+    You can implement step definitions for undefined steps with these snippets:
 
-        /**
-        * @When /^I go to the login page$/
-        */
-        public function iGoToTheLoginPage() {
-        throw new PendingException();
-        }
-    </code></pre>
+    /**
+    * @When /^I go to the login page$/
+    */
+    public function iGoToTheLoginPage() {
+    throw new PendingException();
+    }
+</code></pre>
         <p>Behat will generate a code scaffolding to use for our test. which we can further define.</p>
     </section>
 
@@ -234,15 +274,15 @@
     <pre><code data-trim contenteditable>
         When I visit the login page
     </code></pre>
-    <pre><code data-trim contenteditable>
-        /**
-        * @When I visit the login page
-        */
-        public function iAmOnThe()
-        {
-        $this->getSession()->visit('user');
-        }
-    </code></pre>
+<pre><code data-trim contenteditable>
+    /**
+    * @When I visit the login page
+    */
+    public function iAmOnThe()
+    {
+    $this->getSession()->visit('user');
+    }
+</code></pre>
     </section>
     <section>
         <h2>The code behind the magic</h2>
@@ -251,46 +291,46 @@
         Scenario: Confirm the workbench module is installed
         Given the "workbench" module is installed
     </code></pre>
-    <pre><code data-trim contenteditable>
-        /**
-        * Asserts that a given module exists and is enabled.
-        *
-        * @Given the :module module is installed
-        */
-        public function assertModuleExists($module)
-        {
-        if (module_exists($module)) {
-        return TRUE;
-        }
-        $message = sprintf('Module "%s" is not installed.', $module);
-        throw new \Exception($message);
-        }
+<pre><code data-trim contenteditable>
+    /**
+    * Asserts that a given module exists and is enabled.
+    *
+    * @Given the :module module is installed
+    */
+    public function assertModuleExists($module)
+    {
+    if (module_exists($module)) {
+    return TRUE;
+    }
+    $message = sprintf('Module "%s" is not installed.', $module);
+    throw new \Exception($message);
+    }
 
-    </code></pre>
+</code></pre>
 
 
     </section>
     <section>
         <h2>The code behind the test</h2>
         <p>Testing user workflow</p>
-    <pre><code data-trim contenteditable>
-        @api
-        Feature: Content Type Event
-        As a Guest User
-        I want to view data related to an Event
-        So that I can decide it is something I would like to attend.
+<pre><code data-trim contenteditable>
+    @api
+    Feature: Content Type Event
+    As a Guest User
+    I want to view data related to an Event
+    So that I can decide it is something I would like to attend.
 
-        Scenario: Add an event node and verify that the necessary fields exist.
-        Given I am a authenticated user"
-        Given A "event" node:
-        | title | field_description | field_event_location | field_event_date | status |
-        | Name of event | I am a description | Aiken Brew Pub | 2015-01-21 20:30:00 | 1 |
-        When I go to the node url
-        Then I should see the text "Name of event"
-        And I should see the text "I am a description"
-        And I should see the text "Aiken Brew Pub"
-        And I should see the text "Wednesday, January 21, 2015 - 20:30"
-    </code></pre>
+    Scenario: Add an event node and verify that the necessary fields exist.
+    Given I am a authenticated user"
+    Given A "event" node:
+    | title | field_description | field_event_location | field_event_date | status |
+    | Name of event | I am a description | Aiken Brew Pub | 2015-01-21 20:30:00 | 1 |
+    When I go to the node url
+    Then I should see the text "Name of event"
+    And I should see the text "I am a description"
+    And I should see the text "Aiken Brew Pub"
+    And I should see the text "Wednesday, January 21, 2015 - 20:30"
+</code></pre>
     </section>
     <section>
         <h2>Secret recipe</h2>
@@ -305,19 +345,19 @@
     <h2>Doing things in the browser</h2>
     <p>We use Mink to interact with the browser</p>
     <p>Some common usages of the Mink API</p>
-                        <pre><code data-trim contenteditable>
-                            $element = $session->getPage();
+<pre><code data-trim contenteditable>
+    $element = $session->getPage();
 
-                            $element->findAll($selector, $locator);
-                            $element->getText();
-                            $element->getHtml();
+    $element->findAll($selector, $locator);
+    $element->getText();
+    $element->getHtml();
 
-                            $element->isVisible();
-                            $element->click();
-                            $element->press();
-                            $element->check();
-                            $element->uncheck();
-                        </code></pre>
+    $element->isVisible();
+    $element->click();
+    $element->press();
+    $element->check();
+    $element->uncheck();
+</code></pre>
     <a href="http://blog.lepine.pro/images/2012-03-behat-cheat-sheet-en.pdf">Mink Cheat Sheet</a>
 </section>
 
