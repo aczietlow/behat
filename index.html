@@ -108,7 +108,6 @@
     </section>
     <section>
         <h2>Faster development you say?</h2>
-        <p>[maybe find a graphic for this] Case studies conducted at Microsoft and IBM indicate that teams that adopt TDD experience 40% to 90% bugs, which results in 15-35% additional development time.</p>
     </section>
 </section>
 <section>
@@ -133,6 +132,77 @@
         </aside>
     </section>
 </section>
+<section>
+    <section>
+        <h2>Why isn't everyone doing this testing thing?</h2>
+        <h4>Testing takes time</h4>
+        <p>[maybe find a graphic for this] Case studies conducted at Microsoft and IBM indicate that teams that adopt TDD experience 40% to 90% bugs, which results in 15-35% additional development time.</p>
+    </section>
+    <section>
+        <h2>More Excuses</h2>
+        <h4>Writing good tests is hard</h4>
+        <p>"Imperfect tests, run frequently, are much better than perfect tests that are never written at all." - Martin Fowler</p>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Seriously, we can do this in Drupal?</h2>
+        <p>[Behat Image]</p>
+    </section>
+    <section>
+        <h2>Installation</h2>
+        <p>Composer</p>
+<pre><code data-trim contenteditable>
+    "require": {
+        "behat/behat": "3.0.*@stable"
+    }
+</code></pre>
+        <p>Behat.yml</p>
+<pre><code data-trim contenteditable>
+default:
+    suites:
+        default:
+            contexts:
+                - FeatureContext
+extensions:
+    Behat\MinkExtension:
+</code></pre>
+        <a href="#">Google search results</a>
+    </section>
+    <section>
+        <h2>The Process</h2>
+        <p>[make image] define features -> describe features using scenarios -> create step definitions</p>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Define Features</h2>
+        <p>[insert image of file structure]</p>
+        <p>Described features go in .feature files (in the feature directory by default)</p>
+    </section>
+    <section>
+        <h2>Homepage</h2>
+        <h4>Define Feature</h4>
+        <pre><code data-trim contenteditable>
+#./features/homepage.feature
+Feature: Homepage.
+As a user,
+I want to see ACME's name on the homepage,
+so that I what website I am using.
+        </code></pre>
+    </section>
+    <h2>Homepage</h2>
+<pre><code data-trim contenteditable>
+    #./features/homepage.feature
+    Feature: Homepage.
+    As a user,
+    I want to see ACME's name on the homepage,
+    so that I what website I am using.
+</code></pre>
+    <section>
+    </section>
+</section>
+
 
 <!-- Old Presentation -->
 
