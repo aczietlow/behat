@@ -147,14 +147,15 @@
 <section>
     <section>
         <h2>Seriously, we can do this in Drupal?</h2>
-        <p>[Behat Image]</p>
+        <img src="assets/beehat-drupalicon.png" alt="Behat" />
     </section>
     <section>
         <h2>Installation</h2>
         <p>Composer</p>
 <pre><code data-trim contenteditable>
     "require": {
-        "behat/behat": "3.0.*@stable"
+        "behat/behat": "3.0.*@stable",
+        "drupal/drupal-extension": "3.0.*@dev"
     }
 </code></pre>
         <p>Behat.yml</p>
@@ -164,42 +165,93 @@ default:
         default:
             contexts:
                 - FeatureContext
+                - Drupal\DrupalExtension\Context\DrupalContext
 extensions:
     Behat\MinkExtension:
 </code></pre>
         <a href="#">Google search results</a>
     </section>
-    <section>
-        <h2>The Process</h2>
-        <p>[make image] define features -> describe features using scenarios -> create step definitions</p>
-    </section>
 </section>
 <section>
     <section>
         <h2>Define Features</h2>
-        <p>[insert image of file structure]</p>
-        <p>Described features go in .feature files (in the feature directory by default)</p>
+        <img src="assets/file-structure.png"/>
+        <p>Tests are saved in .feature files</p>
     </section>
     <section>
-        <h2>Homepage</h2>
-        <h4>Define Feature</h4>
+        <h2>User Login</h2>
+        <h4>Client Requirement</h4>
         <pre><code data-trim contenteditable>
-#./features/homepage.feature
-Feature: Homepage.
-As a user,
-I want to see ACME's name on the homepage,
-so that I what website I am using.
+I want to be able to log into my website in order to edit my content.
         </code></pre>
     </section>
-    <h2>Homepage</h2>
-<pre><code data-trim contenteditable>
-    #./features/homepage.feature
-    Feature: Homepage.
-    As a user,
-    I want to see ACME's name on the homepage,
-    so that I what website I am using.
-</code></pre>
     <section>
+        <h2>User Login</h2>
+        <h4>Requirements we can use</h4>
+<pre><code data-trim contenteditable>
+As a an anonymous user,
+I want to be able to log into my website,
+So that I can edit my content.
+</code></pre>
+    </section>
+    <section>
+        <h2>User Login</h2>
+        <h4>Acceptance Criteria</h4>
+        <p>What does it mean to be logged in? How do we know that we are logged in? How do we check can edit content. </p>
+<pre><code data-trim contenteditable>
+Given I am an anonymous user
+When I am at "user/login"
+And I fill in "name" with "admin"
+And I fill in "pass" with "admin"
+And press "Log in"
+Then I should see the link "Log out"
+</code></pre>
+    </section>
+    <section>
+        <h2>User Login</h2>
+        <p>Slap it in a feature file and boom you have your test.</p>
+<pre><code data-trim contenteditable>
+#./features/user_login.feature
+@api
+Feature: Homepage.
+  As a user of Scylla,
+  I want to be able to log into the site
+  so that may access features specific to my user account.
+
+Scenario: I can log in.
+  Given I am an anonymous user
+  When I am at "user/login"
+  And I fill in "name" with "admin"
+  And I fill in "pass" with "admin"
+  And press "Log in"
+  Then I should see the link "Log out"
+</code></pre>
+        <aside class="notes">
+            Each of these lines map to function that defines what they mean.
+        </aside>
+    </section>
+    <section>
+        <h2>Executing tests</h2>
+<pre><code data-trim contenteditable>
+bin/behat
+bin/behat acceptance/homepage.feature
+bin/behat --name='I can see the Hello World on the homepage'
+
+>output
+@api
+Feature: Homepage.
+As a user of Scylla,
+I want to see the Scylla on the homepage,
+so that I know who is responsible for such an awesome product.
+
+Scenario: I can see the Scylla name on the homepage. # acceptance/homepage.feature:7
+When I am on the homepage                                   # FeatureContext::iAmOnHomepage()
+Then I should see the text "Scylla"       # FeatureContext::assertTextVisible()
+
+1 scenario (1 passed)
+2 steps (2 passed)
+0m5.685s
+</code></pre>
     </section>
 </section>
 
@@ -207,85 +259,7 @@ so that I what website I am using.
 <!-- Old Presentation -->
 
 <section>
-    <section>
-        <h2>Installation</h2>
-        <p>Composer</p>
-<pre><code data-trim contenteditable>
-    "require": {
-    "behat/behat": "2.5.*@stable",
-    "behat/mink": "1.5.*@stable",
-    "behat/mink-extension": "*",
-    "behat/mink-goutte-driver": "*",
-    "behat/mink-selenium2-driver": "*"
-    }
-</code></pre>
-        <p>Behat.yml</p>
-<pre><code data-trim contenteditable>
-    default:
-    paths:
-    features: 'acceptance'
-    extensions:
-    Behat\MinkExtension\Extension:
-    goutte: ~
-    selenium2:
-    wd_host: "http://127.0.0.1:8643/wd/hub"
-    base_url: http://scylla.dev
-</code></pre>
-    </section>
-    <section>
-        <h2>Behat: Writing features</h2>
-        <p>In BDD everything starts with defining a feature, and then implementing it in code. Features are written using gherkin syntax and saved in a .feature file</p>
-<pre><code data-trim contenteditable>
-# acceptance/homepage.feature
 
-@api
-Feature: Homepage.
-As a user of Scylla,
-I want to see Hello world on the homepage,
-so that I know who is responsible for such an awesome product.
-</code></pre>
-    </section>
-    <section>
-        <h2>Features</h2>
-        <p>Every feature starts with the same format:</p>
-<pre><code data-trim contenteditable>
-As a &ltuser role&gt,
-I want &ltsome feature&gt,
-so that &ltsome benefit&gt.
-</code></pre>
-        <p>This section isn't parsed by Behat during testing, but is important in describing the feature in a readable format. Each feature is described by multiple "scenarios" or how that feature will behave under various conditions.</p>
-    </section>
-    <section>
-        <h2>Test Scenarios</h2>
-<pre><code data-trim contenteditable>
-    Scenario: I can see the Hello World on the homepage.
-    When I am on the homepage
-    Then I should see the text "Hello World"
-</code></pre>
-    </section>
-    <section>
-        <h2>Executing tests</h2>
-<pre><code data-trim contenteditable>
-    bin/behat
-    bin/behat acceptance/homepage.feature
-    bin/behat --name='I can see the Hello World on the homepage'
-
-    >output
-    @api
-    Feature: Homepage.
-    As a user of Scylla,
-    I want to see the Scylla on the homepage,
-    so that I know who is responsible for such an awesome product.
-
-    Scenario: I can see the Scylla name on the homepage. # acceptance/homepage.feature:7
-    When I am on the homepage                                   # FeatureContext::iAmOnHomepage()
-    Then I should see the text "Scylla"       # FeatureContext::assertTextVisible()
-
-    1 scenario (1 passed)
-    2 steps (2 passed)
-    0m5.685s
-</code></pre>
-    </section>
 </section>
 
 <section>
