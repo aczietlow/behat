@@ -123,7 +123,6 @@
             <li>Greater understanding of code base</li>
             <li><strong>Faster development</strong></li>
         </ul>
-
         <aside class="notes">
             <ul>
                 <li>Better product quality - better functioning product</li>
@@ -150,11 +149,14 @@
 <section>
     <section>
         <h2>Seriously, we can do this in Drupal?</h2>
+        <p>There's the module for that, because of course there is </p>
+        <a href="https://www.drupal.org/project/drupalextension">Drupal Extension</a>
+        <br />
         <img src="assets/beehat-drupalicon.png" alt="Behat" />
     </section>
     <section>
         <h2>Installation</h2>
-        <p>Composer</p>
+        <p>Composer.json</p>
 <pre><code data-trim contenteditable>
     "require": {
         "behat/behat": "3.0.*@stable",
@@ -172,7 +174,7 @@ default:
 extensions:
     Behat\MinkExtension:
 </code></pre>
-        <a href="#">Google search results</a>
+        <a href="#">Use your google powers</a>
     </section>
 </section>
 <section>
@@ -200,7 +202,7 @@ So that I can edit my content.
     <section>
         <h2>User Login</h2>
         <h4>Acceptance Criteria</h4>
-        <p>What does it mean to be logged in? How do we know that we are logged in? How do we check can edit content. </p>
+        <p>What does it mean to be logged in? How do we know that we are logged in?</p>
 <pre><code data-trim contenteditable>
 Given I am an anonymous user
 When I am at "user/login"
@@ -208,6 +210,17 @@ And I fill in "name" with "admin"
 And I fill in "pass" with "admin"
 And press "Log in"
 Then I should see the link "Log out"
+</code></pre>
+    </section>
+    <section>
+    <h2>User Login</h2>
+    <h4>Acceptance Criteria</h4>
+    <p>How do we check can edit content. </p>
+<pre><code data-trim contenteditable>
+Given I am logged in as a user with the administrator role
+When I am at "node/add/page"
+Then I should see "Create Basic page"
+And I should get a 200 HTTP response
 </code></pre>
     </section>
     <section>
@@ -228,35 +241,30 @@ Scenario: I can log in.
   And I fill in "pass" with "admin"
   And press "Log in"
   Then I should see the link "Log out"
+
+Scenario: I can edit content
+  Given I am logged in as a user with the administrator role
+  When I am at "node/add/page"
+  Then I should see "Create Basic page"
+  And I should get a 200 HTTP response
 </code></pre>
         <aside class="notes">
-            Each of these lines map to function that defines what they mean.
+            <ul>
+                <li>Top Section: Describe the feature. Provides human context </li>
+                <li>Each feature is described by multiple scenarios - How the feature should act under certain conditions</li>
+                <li>Each of the scenario lines map to function that defines what actions to take.</li>
+            </ul>
         </aside>
     </section>
     <section>
         <h2>Executing tests</h2>
 <pre><code data-trim contenteditable>
 $ bin/behat features/user_login.feature
-@api
-Feature: Homepage.
-As a user of Scylla,
-I want to be able to log into the site
-so that may access features specific to my user account.
-
-Scenario: I can log in.              # features/user_login.feature:7
-Given I am an anonymous user         # Drupal\DrupalExtension\Context\DrupalContext::assertAnonymousUser()
-When I am at "user/login"            # Drupal\DrupalExtension\Context\MinkContext::assertAtPath()
-And I fill in "name" with "admin"    # Drupal\DrupalExtension\Context\MinkContext::fillField()
-And I fill in "pass" with "admin"    # Drupal\DrupalExtension\Context\MinkContext::fillField()
-And press "Log in"                   # Drupal\DrupalExtension\Context\MinkContext::pressButton()
-Then I should see the link "Log out" # Drupal\DrupalExtension\Context\MinkContext::assertLinkVisible()
-
-1 scenario (1 passed)
-6 steps (6 passed)
-0m1.65s (33.33Mb)
 </code></pre>
+        <img src="assets/user-login-results.png" />
     </section>
 </section>
+
 
 
 <!-- Old Presentation -->
