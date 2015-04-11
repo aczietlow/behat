@@ -85,10 +85,6 @@
             <li>Greater understanding of code base</li>
             <li><strong>Faster development</strong></li>
         </ul>
-        <aside class="notes">
-            Add some notes here.
-
-        </aside>
     </section>
     <section>
         <h2>What is quality anyway?</h2>
@@ -108,6 +104,13 @@
     </section>
     <section>
         <h2>Faster development you say?</h2>
+        <aside class="notes">
+            <ul>
+                <li>Fewer bugs, less time squashing them</li>
+                <li>Forces you to better understand code base</li>
+                <li>Avoid building code on top of an unknown bug</li>
+            </ul>
+        </aside>
     </section>
 </section>
 <section>
@@ -213,10 +216,10 @@ Then I should see the link "Log out"
 <pre><code data-trim contenteditable>
 #./features/user_login.feature
 @api
-Feature: Homepage.
-  As a user of Scylla,
-  I want to be able to log into the site
-  so that may access features specific to my user account.
+Feature: User Login.
+  As a an anonymous user,
+  I want to be able to log into my website,
+  So that I can edit my content.
 
 Scenario: I can log in.
   Given I am an anonymous user
@@ -233,24 +236,24 @@ Scenario: I can log in.
     <section>
         <h2>Executing tests</h2>
 <pre><code data-trim contenteditable>
-bin/behat
-bin/behat acceptance/homepage.feature
-bin/behat --name='I can see the Hello World on the homepage'
-
->output
+$ bin/behat features/user_login.feature
 @api
 Feature: Homepage.
 As a user of Scylla,
-I want to see the Scylla on the homepage,
-so that I know who is responsible for such an awesome product.
+I want to be able to log into the site
+so that may access features specific to my user account.
 
-Scenario: I can see the Scylla name on the homepage. # acceptance/homepage.feature:7
-When I am on the homepage                                   # FeatureContext::iAmOnHomepage()
-Then I should see the text "Scylla"       # FeatureContext::assertTextVisible()
+Scenario: I can log in.              # features/user_login.feature:7
+Given I am an anonymous user         # Drupal\DrupalExtension\Context\DrupalContext::assertAnonymousUser()
+When I am at "user/login"            # Drupal\DrupalExtension\Context\MinkContext::assertAtPath()
+And I fill in "name" with "admin"    # Drupal\DrupalExtension\Context\MinkContext::fillField()
+And I fill in "pass" with "admin"    # Drupal\DrupalExtension\Context\MinkContext::fillField()
+And press "Log in"                   # Drupal\DrupalExtension\Context\MinkContext::pressButton()
+Then I should see the link "Log out" # Drupal\DrupalExtension\Context\MinkContext::assertLinkVisible()
 
 1 scenario (1 passed)
-2 steps (2 passed)
-0m5.685s
+6 steps (6 passed)
+0m1.65s (33.33Mb)
 </code></pre>
     </section>
 </section>
@@ -324,7 +327,7 @@ Then I should see the text "Scylla"       # FeatureContext::assertTextVisible()
     */
     public function iAmOnThe()
     {
-    $this->getSession()->visit('user');
+        $this->getSession()->visit('user');
     }
 </code></pre>
     </section>
