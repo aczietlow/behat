@@ -68,10 +68,9 @@
 <body>
 <div class="reveal">
 
-<!-- Any section element inside of this container is displayed as a slide -->
 <div class="slides">
 <section>
-    <h1>A First look at BDD in Drupal with Behat</h1>
+    <h1>A First look at Behat Testing in Drupal</h1>
     <h3>Chris Zietlow \ @aczietlow</h3>
 </section>
 
@@ -138,7 +137,7 @@
     <section>
         <h2>Why isn't everyone doing this testing thing?</h2>
         <h4>Testing takes time</h4>
-        <p>[maybe find a graphic for this] Case studies conducted at Microsoft and IBM indicate that teams that adopt TDD experience 40% to 90% bugs, which results in 15-35% additional development time.</p>
+        <p>Case studies conducted at Microsoft and IBM indicate that teams that adopt TDD experience 40% to 90% bugs, which results in 15-35% additional development time.</p>
     </section>
     <section>
         <h2>More Excuses</h2>
@@ -147,6 +146,10 @@
     </section>
 </section>
 <section>
+    <section>
+        <h2>Enter Behat: Our hero</h2>
+        <p>Do stuff here</p>
+    </section>
     <section>
         <h2>Seriously, we can do this in Drupal?</h2>
         <p>There's the module for that, because of course there is </p>
@@ -180,7 +183,7 @@ extensions:
 <section>
     <section>
         <h2>Define Features</h2>
-        <img src="assets/file-structure.png"/>
+        <img src="assets/file-structure.png" height="300"/>
         <p>Tests are saved in .feature files</p>
     </section>
     <section>
@@ -198,6 +201,9 @@ As a an anonymous user,
 I want to be able to log into my website,
 So that I can edit my content.
 </code></pre>
+        <aside class="notes">
+               3 lines that describe the role, the feature, and the benefit
+        </aside>
     </section>
     <section>
         <h2>User Login</h2>
@@ -211,6 +217,11 @@ And I fill in "pass" with "admin"
 And press "Log in"
 Then I should see the link "Log out"
 </code></pre>
+    <aside class="notes">
+        Given [some context]
+        When [some event]
+        Then [outcome]
+    </aside>
     </section>
     <section>
     <h2>User Login</h2>
@@ -264,136 +275,107 @@ $ bin/behat features/user_login.feature
         <img src="assets/user-login-results.png" />
     </section>
 </section>
-
-
-
-<!-- Old Presentation -->
-
-<section>
-
-</section>
-
 <section>
     <section>
-        <h2>Step Definitions</h2>
-        <p>
-            Behat needs to know how to perform each step defined in our features. The mink extensions has added several common step definitions for us out of the box. To see a list of available step definitions run the following:
-        </p>
+        <h2>Step Defintions</h2>
+        <p>Each scenario step maps to a function that performs the step</p>
 <pre><code data-trim contenteditable>
-    bin/behat -dl
-
-    >output
-    Given /^(?:|I )am on (?:|the )homepage$/
-    When /^(?:|I )go to (?:|the )homepage$/
+    Given I am an anonymous user
 </code></pre>
-    </section>
-    <section>
-        <h2>Step Definitions</h2>
-        <p>Custom step definitions can go in FeatureContext which extends BehatContext given us access to all the defined step definitions from Mink. Consider the following feature scenario.</p>
 <pre><code data-trim contenteditable>
-    Scenario: I can log in to my account.
-    Given I am on the homepage
-    When I go to the login page
-    Then I should see the text "Username"
-    And I should see the text "Password"
-</code></pre>
-    </section>
-    <section>
-        <h2>Step Definitions</h2>
-        <p>f you were to run this test, Behat would tell us that we don't have a step definition for this yet</p>
-<pre><code data-trim contenteditable>
-    Scenario: I can log in to my account.                         # acceptance/homepage.feature:13
-    Given I am on the homepage                                  # FeatureContext::iAmOnHomepage()
-    When I go to the login page
-    Then I should see the text "Username"                       # FeatureContext::assertTextVisible()
-    And I should see the text "Password"                        # FeatureContext::assertTextVisible()
-
-    1 scenarios (1 undefined)
-    4 steps (1 passed, 2 skipped, 1 undefined)
-    0m9.051s
-
-    You can implement step definitions for undefined steps with these snippets:
-
-    /**
-    * @When /^I go to the login page$/
-    */
-    public function iGoToTheLoginPage() {
-    throw new PendingException();
+/**
+ * @Given I am an anonymous user
+ * @Given I am not logged in
+ */
+ public function assertAnonymousUser() {
+    // Verify the user is logged out.
+    if ($this->loggedIn()) {
+      $this->logout();
     }
+  }
 </code></pre>
-        <p>Behat will generate a code scaffolding to use for our test. which we can further define.</p>
     </section>
+    <section>
+        <h2>Step Definitions</h2>
+        <p>Out of the box the Mink and Drupal Drivers will provide a lot of step definitions that you can use.</p>
+<pre><code data-trim contenteditable>
+$ behat -dl
+</code></pre>
+<pre><code data-trim contenteditable>
+default | When I visit the login page
+default | Given I am an anonymous user
+default | Given I am not logged in
+default | Given I am logged in as a user with the :role role(s)
+default | Given I am logged in as a user with the :role role(s) and I have the following fields:
+default | Given I am logged in as :name
+default | Given I am logged in as a user with the :permissions permission(s)
+default | Then I should see (the text ):text in the ":rowText" row
+default | Given I click :link in the :rowText row
+</code></pre>
+    </section>
+    <section>
+        <h2>Custom Step Definitions</h2>
+<pre><code data-trim contenteditable>
+Feature: Migrations
+  As an editor of the website
+  I want the workbench module enabled
+  So that I can create custom editing work flows
 
-    <section>
-        <h2>The code behind the magic</h2>
-    <pre><code data-trim contenteditable>
-        When I visit the login page
-    </code></pre>
-<pre><code data-trim contenteditable>
-    /**
-    * @When I visit the login page
-    */
-    public function iAmOnThe()
-    {
-        $this->getSession()->visit('user');
-    }
+
+Scenario: Confirm the workbench module is installed
+  Given the "workbench" module is installed
 </code></pre>
     </section>
     <section>
-        <h2>The code behind the magic</h2>
-        <p>Can even execute code from Drupal</p>
-    <pre><code data-trim contenteditable>
-        Scenario: Confirm the workbench module is installed
-        Given the "workbench" module is installed
-    </code></pre>
-<pre><code data-trim contenteditable>
-    /**
-    * Asserts that a given module exists and is enabled.
-    *
-    * @Given the :module module is installed
-    */
-    public function assertModuleExists($module)
-    {
+        <h2>Custom Step Definitions</h2>
+        <p>Custom step definitions go in features/bootstrap/FeatureContext.php</p>
+        <pre><code data-trim contenteditable>
+//features/bootstrap/FeatureContext.php
+use Drupal\DrupalExtension\Context\RawDrupalContext;
+use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Gherkin\Node\PyStringNode;
+use Behat\Gherkin\Node\TableNode;
+
+/**
+ * Defines application features from the specific context.
+ */
+class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
+{
+
+}
+</code></pre>
+    </section>
+    <section>
+        <h2>Custom Step Defintions</h2>
+        <pre><code data-trim contenteditable>
+/**
+ * Asserts that a given module exists and is enabled.
+ *
+ * @Given the :module module is installed
+ */
+  public function assertModuleExists($module)
+  {
     if (module_exists($module)) {
     return TRUE;
-    }
+  }
+
     $message = sprintf('Module "%s" is not installed.', $module);
     throw new \Exception($message);
-    }
-
-</code></pre>
-
-
+  }
+        </code></pre>
+        <aside class="notes">
+            By extending the drupal extension we get access to a bootstrapped drupal as well as any methods they've already defined, like nodeCreate() and login()
+        </aside>
     </section>
-    <section>
-        <h2>The code behind the test</h2>
-        <p>Testing user workflow</p>
-<pre><code data-trim contenteditable>
-    @api
-    Feature: Content Type Event
-    As a Guest User
-    I want to view data related to an Event
-    So that I can decide it is something I would like to attend.
-
-    Scenario: Add an event node and verify that the necessary fields exist.
-    Given I am a authenticated user"
-    Given A "event" node:
-    | title | field_description | field_event_location | field_event_date | status |
-    | Name of event | I am a description | Aiken Brew Pub | 2015-01-21 20:30:00 | 1 |
-    When I go to the node url
-    Then I should see the text "Name of event"
-    And I should see the text "I am a description"
-    And I should see the text "Aiken Brew Pub"
-    And I should see the text "Wednesday, January 21, 2015 - 20:30"
-</code></pre>
-    </section>
-    <section>
-        <h2>Secret recipe</h2>
-        <a href="https://www.drupal.org/project/drupalextension">Drupal Extension</a>
-        <p>We're using the Drupal Extension, which is an integration layer between Mink and Drupal. It provides step definitions specific to Drupal as well as gives us access to making calls to the Drupal code base within tests.</p>
-    </section>
-
 </section>
+
+<section style="text-align: left;">
+    <h1>THE END</h1>
+    <p>
+        - <a href="http://docs.behat.org/en/v2.5/">Behat Documentation</a> <br>
+        - <a href="https://github.com/aczietlow/Scylla">Behat in a box</a> <br>
+        - Follow me on twitter: <a href="https://twitter.com/aczietlow">@aczietlow</a>
+    </p>
 </section>
 
 <section>
@@ -416,14 +398,6 @@ $ bin/behat features/user_login.feature
     <a href="http://blog.lepine.pro/images/2012-03-behat-cheat-sheet-en.pdf">Mink Cheat Sheet</a>
 </section>
 
-
-<section style="text-align: left;">
-    <h1>THE END</h1>
-    <p>
-        - <a href="http://docs.behat.org/en/v2.5/">Behat Documentation</a> <br>
-        - <a href="https://github.com/aczietlow/Scylla">Behat in a box</a>
-    </p>
-</section>
 
 </div>
 
