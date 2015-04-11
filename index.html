@@ -275,6 +275,33 @@ $ bin/behat features/user_login.feature
         <img src="assets/user-login-results.png" />
     </section>
 </section>
+
+<section>
+    <section>
+        <h2>Events Feature</h2>
+<pre><code data-trim contenteditable>
+    @api
+    Feature: Content Type Event
+        As an anonymous user
+        I want to view data related to an Event
+        So that I can decide it is something I would like to attend.
+
+    Scenario: Add an event node and verify that the necessary fields exist.
+        Given I am an anonymous user
+        And an "Event Terms" term with the name "camp"
+        And an "Event Terms" term with the name "drupal"
+        And "event" content:
+        | title | field_event_location | field_event_date | field_event_tags | status |
+        | Florida Drupal Camp | Orlando | 2015-04-11 9:00:00 | camp, drupal | 1 |
+        When I am at "content/florida-drupal-camp"
+        Then I should see the text "Florida Drupal Camp"
+        And I should see the text "Orlando"
+        And I should see the text "Saturday, April 11, 2015"
+        And I should see the text "camp"
+        And I should see the text "drupal"
+</code></pre>
+    </section>
+</section>
 <section>
     <section>
         <h2>Step Defintions</h2>
@@ -288,18 +315,18 @@ $ bin/behat features/user_login.feature
  * @Given I am not logged in
  */
  public function assertAnonymousUser() {
-    // Verify the user is logged out.
-    if ($this->loggedIn()) {
-      $this->logout();
-    }
-  }
+   // Verify the user is logged out.
+   if ($this->loggedIn()) {
+   $this->logout();
+ }
+
 </code></pre>
     </section>
     <section>
         <h2>Step Definitions</h2>
         <p>Out of the box the Mink and Drupal Drivers will provide a lot of step definitions that you can use.</p>
 <pre><code data-trim contenteditable>
-$ behat -dl
+    $ behat -dl
 </code></pre>
 <pre><code data-trim contenteditable>
 default | When I visit the login page
@@ -316,14 +343,14 @@ default | Given I click :link in the :rowText row
     <section>
         <h2>Custom Step Definitions</h2>
 <pre><code data-trim contenteditable>
-Feature: Migrations
-  As an editor of the website
-  I want the workbench module enabled
-  So that I can create custom editing work flows
+    Feature: Migrations
+    As an editor of the website
+    I want the workbench module enabled
+    So that I can create custom editing work flows
 
 
-Scenario: Confirm the workbench module is installed
-  Given the "workbench" module is installed
+    Scenario: Confirm the workbench module is installed
+        Given the "workbench" module is installed
 </code></pre>
     </section>
     <section>
@@ -337,13 +364,13 @@ use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 
 /**
- * Defines application features from the specific context.
- */
+* Defines application features from the specific context.
+*/
 class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
 {
 
 }
-</code></pre>
+        </code></pre>
     </section>
     <section>
         <h2>Custom Step Defintions</h2>
@@ -353,22 +380,45 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
  *
  * @Given the :module module is installed
  */
-  public function assertModuleExists($module)
-  {
-    if (module_exists($module)) {
-    return TRUE;
-  }
+ public function assertModuleExists($module)
+ {
+   if (module_exists($module)) {
+   return TRUE;
+ }
 
-    $message = sprintf('Module "%s" is not installed.', $module);
-    throw new \Exception($message);
-  }
+  $message = sprintf('Module "%s" is not installed.', $module);
+  throw new \Exception($message);
+}
         </code></pre>
         <aside class="notes">
             By extending the drupal extension we get access to a bootstrapped drupal as well as any methods they've already defined, like nodeCreate() and login()
         </aside>
     </section>
+    <section>
+        <h2>More custom defintions</h2>
+        <pre><code data-trim contenteditable>
+            Then "events" migration is complete$/
+        </code></pre>
+        <pre><code data-trim contenteditable>
+/**
+ * Asserts the given migration is complete.
+ *
+ * @Then /^the "([^"]*)" migration is complete$/
+ *
+ * @throws /Exception if the migration did not complete.
+ */
+ public function assertMigrationIsComplete($name)
+ {
+   $migration = Migration::getInstance($name);
+   if ($migration->isComplete()) {
+     return TRUE;
+   }
+   $message = sprintf('The "%s" migration is not complete.', $name);
+   throw new \Exception($message);
+}
+        </code></pre>
+    </section>
 </section>
-
 <section style="text-align: left;">
     <h1>THE END</h1>
     <p>
@@ -382,22 +432,24 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
     </p>
 </section>
 
+
+
 <section>
     <h2>Doing things in the browser</h2>
     <p>We use Mink to interact with the browser</p>
     <p>Some common usages of the Mink API</p>
 <pre><code data-trim contenteditable>
-    $element = $session->getPage();
+$element = $session->getPage();
 
-    $element->findAll($selector, $locator);
-    $element->getText();
-    $element->getHtml();
+$element->findAll($selector, $locator);
+$element->getText();
+$element->getHtml();
 
-    $element->isVisible();
-    $element->click();
-    $element->press();
-    $element->check();
-    $element->uncheck();
+$element->isVisible();
+$element->click();
+$element->press();
+$element->check();
+$element->uncheck();
 </code></pre>
     <a href="http://blog.lepine.pro/images/2012-03-behat-cheat-sheet-en.pdf">Mink Cheat Sheet</a>
 </section>

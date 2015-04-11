@@ -1,5 +1,4 @@
-Design Systems and Drupal
+Intro to Behat in Drupal
 ==========================
 
-Presentation by [Larry Garfield](http://www.garfieldtech.com) and Patrick Grady
-
+Presentation by [Chris Zietlow](https://twitter.com/aczietlow)
