@@ -1,59 +1,36 @@
 /**
- * In Progress Sass file, plz add variables as you see fit!
- * Palantir.net theme for reveal.js.
+ * Custom reveal.js theme for Mediacurrent
  */
-
 /*********************************************
  * Variables
  *********************************************/
-
-// Palantir.net Colors
-// See palette at: http://www.palantir.net/the-brand/
-$orange: #fb6500;
-$teal: #11a9a1;
-$green: #9fc855;
-$light-gray: #dbe8ec;
-$medium-gray: #7f9aa0;
-$dark-gray: #344041;
-$darker-gray: #222f31;
-$black: #1a2526;
-
-
-// Palantir.net Typography
-// Download a local copy of "Proxima Nova OTF" at: http://intranet.palantir.net/brand-assets
-$sans-serif: "Proxima Nova", "Helvetica Neue", Helvetica, Arial, "Nimbus Sans L", sans-serif;
-
-/*********************************************
- * LOGO
- *********************************************/
-.palantir-logo {
-  position: absolute;
-  width: 100px;
-  bottom: 3em;
-  left: 3em;
-}
-
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
+/* line 26, mediacurrent.scss */
 body {
-  background: $darker-gray;
+  background: #fff;
 }
 
+/* line 30, mediacurrent.scss */
 .reveal {
-  font-family: $sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Nimbus Sans L", sans-serif;
   font-size: 36px;
   font-weight: 300;
-  color: #eeeeee; }
+  color: #1a2526;
+}
 
+/* line 36, mediacurrent.scss */
 ::selection {
   color: white;
   background: #ff5e99;
-  text-shadow: none; }
+  text-shadow: none;
+}
 
 /*********************************************
  * HEADERS
  *********************************************/
+/* line 44, mediacurrent.scss */
 .reveal h1,
 .reveal h2,
 .reveal h3,
@@ -61,7 +38,7 @@ body {
 .reveal h5,
 .reveal h6 {
   margin: 0 0 20px 0;
-  color: #eeeeee;
+  color: #d09215;
   line-height: 0.9em;
   letter-spacing: -0.025em;
   font-weight: 600;
@@ -70,6 +47,7 @@ body {
 /*********************************************
  * CALLOUT TEXT
  *********************************************/
+/* line 60, mediacurrent.scss */
 .reveal .large {
   font-size: 52px;
 }
@@ -77,8 +55,9 @@ body {
 /*********************************************
  * LINKS
  *********************************************/
+/* line 67, mediacurrent.scss */
 .reveal a:not(.image) {
-  color: $orange;
+  color: #d09215;
   text-decoration: none;
   -webkit-transition: color .15s ease;
   -moz-transition: color .15s ease;
@@ -86,8 +65,10 @@ body {
   -o-transition: color .15s ease;
   transition: color .15s ease;
 }
+
+/* line 76, mediacurrent.scss */
 .reveal a:not(.image):hover {
-  color: $medium-gray;
+  color: #7f9aa0;
   text-shadow: none;
   border: none;
 }
@@ -95,6 +76,7 @@ body {
 /*********************************************
  * IMAGES
  *********************************************/
+/* line 85, mediacurrent.scss */
 .reveal section img {
   margin: .5em 0px;
 }
@@ -102,51 +84,72 @@ body {
 /*********************************************
  * NAVIGATION CONTROLS
  *********************************************/
+/* line 92, mediacurrent.scss */
 .reveal .controls div.navigate-left,
 .reveal .controls div.navigate-left.enabled {
-  border-right-color: $orange; }
+  border-right-color: #d09215;
+}
 
+/* line 96, mediacurrent.scss */
 .reveal .controls div.navigate-right,
 .reveal .controls div.navigate-right.enabled {
-  border-left-color: $orange; }
+  border-left-color: #d09215;
+}
 
+/* line 100, mediacurrent.scss */
 .reveal .controls div.navigate-up,
 .reveal .controls div.navigate-up.enabled {
-  border-bottom-color: $orange; }
+  border-bottom-color: #d09215;
+}
 
+/* line 104, mediacurrent.scss */
 .reveal .controls div.navigate-down,
 .reveal .controls div.navigate-down.enabled {
-  border-top-color: $orange; }
+  border-top-color: #d09215;
+}
 
+/* line 108, mediacurrent.scss */
 .reveal .controls div.navigate-left.enabled:hover {
-  border-right-color: $medium-gray; }
+  border-right-color: #7f9aa0;
+}
 
+/* line 111, mediacurrent.scss */
 .reveal .controls div.navigate-right.enabled:hover {
-  border-left-color: $medium-gray; }
+  border-left-color: #7f9aa0;
+}
 
+/* line 114, mediacurrent.scss */
 .reveal .controls div.navigate-up.enabled:hover {
-  border-bottom-color: $medium-gray; }
+  border-bottom-color: #7f9aa0;
+}
 
+/* line 117, mediacurrent.scss */
 .reveal .controls div.navigate-down.enabled:hover {
-  border-top-color: $medium-gray; }
+  border-top-color: #7f9aa0;
+}
 
 /*********************************************
  * PROGRESS BAR
  *********************************************/
+/* line 123, mediacurrent.scss */
 .reveal .progress {
-  background: darken($black, 50%); }
+  background: black;
+}
 
+/* line 126, mediacurrent.scss */
 .reveal .progress span {
-  background: $orange;
+  background: #d09215;
   -webkit-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
   -moz-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
   -ms-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
   -o-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
-  transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985); }
+  transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+}
 
 /*********************************************
  * OVERRIDES
  *********************************************/
+/* line 137, mediacurrent.scss */
 .reveal blockquote {
   text-align: center;
   display: block;
@@ -155,36 +158,51 @@ body {
   margin: 1em auto;
   padding: .5em;
   font-weight: 600;
-  background: $dark-gray;
+  background: #344041;
 }
 
+/* line 148, mediacurrent.scss */
 .reveal section pre code {
-  display: block; padding: 0.5em;
-  background: $black;
+  display: block;
+  padding: 0.5em;
+  background: #1a2526;
   max-height: none;
 }
 
 /*********************************************
  * AD HOC CUSTOM CLASSES (Originally by Larry)
  *********************************************/
-
+/* line 158, mediacurrent.scss */
 .reveal pre {
   width: 100%;
 }
 
+/* line 162, mediacurrent.scss */
 q:before {
   content: '\201C';
 }
+
+/* line 165, mediacurrent.scss */
 q:after {
   content: '\201D';
 }
 
+/* line 169, mediacurrent.scss */
 .reveal section img {
   border: 0px;
   box-shadow: none;
   background: none;
 }
 
+/* line 175, mediacurrent.scss */
 p.bigtext {
   font-size: 150%;
+}
+
+/* line 179, mediacurrent.scss */
+.sidebar {
+  float: left;
+  width: 10%;
+  height: 100%;
+  background-color: #003954;
 }
