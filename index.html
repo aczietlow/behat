@@ -152,6 +152,23 @@
         <h2>Enter Behat: Our hero</h2>
         <p>Behat is a BDD (Behavior Driven Development) framework written in PHP</p>
     </section>
+    <section data-markdown>
+        ## Tool Chain
+        * Browser
+          * Firefox
+
+        * Drivers
+          * Emulators - Glorified http clients; can send http requests and parse the response
+            * Goutte
+          * Controllers - controls real browser (like firefox)
+            * Selenium2
+            * PhantomJS
+        * Mink - Abstraction layer that sits on top of drivers
+          * Allows a common interface for describing behaviors using different drivers
+        * Behat - Behavior driven testing framework of awesomeness
+          * Written in Gherkin language and saved in a .feature file
+
+    </section>
     <section>
         <h2>Seriously, we can do this in Drupal?</h2>
         <p>There's the module for that, because of course there is </p>
@@ -188,11 +205,15 @@ extensions:
         <img src="assets/file-structure.png" height="300"/>
         <p>Tests are saved in .feature files</p>
     </section>
+    <section data-markdown>
+        ## Behavior Driven Development
+        an “outside-in” methodology. It starts at the outside by identifying business outcomes, and then drills down into the feature set that will achieve those outcomes. - Dan North*
+    </section>
     <section>
         <h2>User Login</h2>
         <h4>Client Requirement</h4>
         <pre><code data-trim contenteditable>
-I want to be able to log into my website in order to edit my content.
+I want to be able to log into my website
         </code></pre>
     </section>
     <section>
@@ -275,6 +296,29 @@ Scenario: I can edit content
 $ bin/behat features/user_login.feature
 </code></pre>
         <img src="assets/user-login-results.png" />
+    </section>
+</section>
+<section>
+    <section data-markdown>
+        Every feature starts with the same format:
+
+            As a "user role",
+            I want "some feature",
+            so that "some benefit".
+
+        This section isn't parsed by Behat during testing, but is important in describing the feature in a readable format.
+    </section>
+    <section data-markdown>
+        Each feature is described by multiple "scenarios" or how that feature will behave under various conditions.
+
+            Scenario: I can see the Hello World on the homepage.
+            Given I am anonymous user
+            When I am on the homepage
+            Then I should see the text "Hello World"
+
+            Given "something that puts the system in a known state"
+            when "describe the key actions"
+            Then "observable outcome"
     </section>
 </section>
 
