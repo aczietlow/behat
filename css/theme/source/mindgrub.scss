@@ -12,10 +12,15 @@
 @import "../template/settings";
 // ---------------------------------------------
 
-
+// font; "Roboto",sans-serif;
 // Include theme-specific fonts
-@import url(../../lib/font/league-gothic/league-gothic.css);
-@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
+@font-face {
+  font-family: 'Roboto';
+  src: url('../../lib/font/Roboto/Roboto-Regular.ttf')  format('truetype');
+}
+
+// @import url('https://fonts.googleapis.com/css?family=Roboto');
+
 
 // Override theme settings (see ../template/settings.scss)
 $headingTextShadow: 0px 0px 6px rgba(0,0,0,0.2);
@@ -26,7 +31,13 @@ $heading1TextShadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b
 	@include radial-gradient( rgba(28,30,32,1), rgba(85,90,95,1) );
 }
 
-
+// Override theme settings (see ../template/settings.scss).
+$mainFont: 'Open Sans', sans-serif;
+$headingFont: 'Roboto', sans-serif;
+$heading1Size: 3.1em;
+$heading2Size: 1.76em;
+$heading3Size: 1.22em;
+$heading4Size: 1.00em;
 
 // Theme template ------------------------------
 @import "../template/theme";
