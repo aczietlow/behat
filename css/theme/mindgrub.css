@@ -13,20 +13,20 @@
  * GLOBAL STYLES
  *********************************************/
 body {
-  background: #1c1e20;
-  background: -moz-radial-gradient(center, circle cover, #555a5f 0%, #1c1e20 100%);
-  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #555a5f), color-stop(100%, #1c1e20));
-  background: -webkit-radial-gradient(center, circle cover, #555a5f 0%, #1c1e20 100%);
-  background: -o-radial-gradient(center, circle cover, #555a5f 0%, #1c1e20 100%);
-  background: -ms-radial-gradient(center, circle cover, #555a5f 0%, #1c1e20 100%);
-  background: radial-gradient(center, circle cover, #555a5f 0%, #1c1e20 100%);
+  background: #e6e6e6;
+  background: -moz-radial-gradient(center, circle cover, white 0%, #e6e6e6 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, white), color-stop(100%, #e6e6e6));
+  background: -webkit-radial-gradient(center, circle cover, white 0%, #e6e6e6 100%);
+  background: -o-radial-gradient(center, circle cover, white 0%, #e6e6e6 100%);
+  background: -ms-radial-gradient(center, circle cover, white 0%, #e6e6e6 100%);
+  background: radial-gradient(center, circle cover, white 0%, #e6e6e6 100%);
   background-color: #2b2b2b; }
 
 .reveal {
   font-family: "Open Sans", sans-serif;
   font-size: 40px;
   font-weight: normal;
-  color: #eee; }
+  color: #111; }
 
 ::selection {
   color: #fff;
@@ -69,7 +69,7 @@ body {
   font-size: 1.76em; }
 
 .reveal h3 {
-  font-size: 1.55em; }
+  font-size: 1.22em; }
 
 .reveal h4 {
   font-size: 1em; }
@@ -236,7 +236,7 @@ body {
 .reveal section img {
   margin: 15px 0px;
   background: rgba(255, 255, 255, 0.12);
-  border: 4px solid #eee;
+  border: 4px solid #111;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
 
 .reveal section img.plain {
