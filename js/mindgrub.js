@@ -8,7 +8,7 @@
 $('div.slides>section').each(function( i ) {
     var background = $(this).attr('data-background');
     if (typeof background === typeof undefined || background === false) {
-        $(this).attr('data-background', 'assets/background-pattern-grey.png');
+        $(this).attr('data-background', 'assets/background-pattern-grey-opacity.png');
     }
 });
 
