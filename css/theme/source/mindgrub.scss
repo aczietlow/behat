@@ -28,12 +28,13 @@ $heading1TextShadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b
 
 // Background generator
 @mixin bodyBackground() {
-  @include radial-gradient(rgba(230,230,230,1), rgba(255,255,255,1));
+  @include radial-gradient(rgba(255,255,255,1), rgba(255,255,255,1));
 }
 
 // Override theme settings (see ../template/settings.scss).
 $mainFont: 'Open Sans', sans-serif;
 $mainColor: #111;
+$altColor: rgba(230,230,230,1);
 
 $headingFont: 'Roboto', sans-serif;
 $headingColor: #111;
@@ -45,3 +46,40 @@ $heading4Size: 1.00em;
 // Theme template ------------------------------
 @import "../template/theme";
 // ---------------------------------------------
+
+.reveal {
+  .odd {
+    color: $altColor;
+    h1, h2, h3, h4, h5 {
+      color: $altColor;
+    }
+  }
+}
+
+.reveal .footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 0.5em;
+  z-index: 100;
+  background-color: rgba(255,255,255,1);
+  width: 100%;
+  img {
+    padding-left: 1em;
+    height: 5em;
+  }
+  .left {
+    float:left;
+  }
+  .right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    top: 50%;
+  }
+  span {
+    padding-left: 2em;
+    padding-right: 2em;
+    font-size: 1.33em;
+  }
+}
