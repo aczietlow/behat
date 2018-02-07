@@ -35,6 +35,7 @@ $heading1TextShadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b
 $mainFont: 'Open Sans', sans-serif;
 $mainColor: #111;
 $altColor: rgba(230,230,230,1);
+$mindgrubRed: #a81e22ff;
 
 $headingFont: 'Roboto', sans-serif;
 $headingColor: #111;
@@ -75,11 +76,14 @@ $heading4Size: 1.00em;
     position: absolute;
     bottom: 0;
     right: 0;
-    top: 50%;
+    top: 40%;
   }
   span {
-    padding-left: 2em;
-    padding-right: 2em;
+    padding-left: 1.8em;
+    padding-right: 1.8em;
     font-size: 1.33em;
+    a {
+      color: #a81e22ff;
+    }
   }
 }

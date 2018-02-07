@@ -293,8 +293,10 @@ body {
     position: absolute;
     bottom: 0;
     right: 0;
-    top: 50%; }
+    top: 40%; }
   .reveal .footer span {
-    padding-left: 2em;
-    padding-right: 2em;
-    font-size: 0.75em; }
+    padding-left: 1.8em;
+    padding-right: 1.8em;
+    font-size: 1.33em; }
+    .reveal .footer span a {
+      color: #a81e22ff; }
