@@ -271,10 +271,15 @@ body {
   -moz-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
   transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985); }
 
+.reveal a {
+  color: #aa0000; }
+
 .reveal .odd {
   color: #e6e6e6; }
   .reveal .odd h1, .reveal .odd h2, .reveal .odd h3, .reveal .odd h4, .reveal .odd h5 {
     color: #e6e6e6; }
+  .reveal .odd a {
+    color: #ff5e5e; }
 
 .reveal .footer {
   position: absolute;
@@ -298,5 +303,3 @@ body {
     padding-left: 1.8em;
     padding-right: 1.8em;
     font-size: 1.33em; }
-    .reveal .footer span a {
-      color: #a81e22ff; }

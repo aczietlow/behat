@@ -15,7 +15,7 @@ $('div.slides>section').each(function( i ) {
 $('div.slides>section:odd').each(function( i ) {
     var background = $(this).attr('data-background-color');
     if (typeof background === typeof undefined || background === false) {
-        $(this).attr('data-background-color', '#a81e22ff');
+        $(this).attr('data-background-color', '#aa0000');
         $(this).addClass('odd');
     }
 });
