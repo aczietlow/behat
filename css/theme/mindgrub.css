@@ -222,7 +222,7 @@ body {
   transition: color .15s ease; }
 
 .reveal a:hover {
-  color: #71e9f4;
+  color: #ff1111;
   text-shadow: none;
   border: none; }
 
@@ -274,12 +274,17 @@ body {
 .reveal a {
   color: #AA0000; }
 
+.reveal .controls {
+  color: #FF7605; }
+
 .reveal .odd {
   color: #e6e6e6; }
   .reveal .odd h1, .reveal .odd h2, .reveal .odd h3, .reveal .odd h4, .reveal .odd h5 {
     color: #e6e6e6; }
   .reveal .odd a {
     color: #FF7605; }
+  .reveal .odd a:hover {
+    color: #ffae6b; }
 
 .reveal .footer {
   position: absolute;

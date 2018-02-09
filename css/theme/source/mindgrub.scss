@@ -37,6 +37,7 @@ $mindgrubGrey: #333333;
 $mindgrubOrange: #FF7605;
 // @TODO Change link colors on odd pages to orange.
 $linkColor: $mindgrubRed;
+$linkColorHover: lighten( $linkColor, 20% );
 
 $headingFont: 'Roboto', sans-serif;
 $headingColor: #111;
@@ -53,6 +54,9 @@ $heading4Size: 1.00em;
   a {
     color: $mindgrubRed;
   }
+  .controls {
+    color: $mindgrubOrange;
+  }
   .odd {
     color: $altColor;
     h1, h2, h3, h4, h5 {
@@ -61,6 +65,10 @@ $heading4Size: 1.00em;
     a {
       color: $mindgrubOrange;
     }
+    a:hover {
+      color: lighten( $mindgrubOrange, 20% );
+    }
+
   }
 }
 
