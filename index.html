@@ -34,83 +34,147 @@
 					<span><a href="http://aczietlow.github.io/behat/">Intro to Behat</a></span>
 					<span><a href="https://twitter.com/aczietlow">@aczietlow</a></span>
 				</div>
+				<aside class="notes">
+					<p>Talk about people not tech. Gasp!</p>
+				</aside>
 			</div>
 			<div class="slides">
 				<section>
-					<h1>A First look at Behat Testing in Drupal</h1>
-				</section>
-
-				<section>
-					<section>
-						<h2>Why should you bother?</h2>
-						<ul>
-							<li>Better code quality</li>
-							<li>Less Regression</li>
-							<li>Better Acceptance Criteria</li>
-							<li>Greater understanding of code base</li>
-							<li><strong>Faster development</strong></li>
-						</ul>
-					</section>
-					<section>
-						<h2>What is quality anyway?</h2>
-						<img src="assets/code-review.png"/>
-						<aside class="notes">
-							<p>your team should decide what the code quality means to you.</p>
-
-							<ul>
-								<li>Testible</li>
-								<li>Compliant</li>
-								<li>Clear</li>
-								<li>Well Documented</li>
-							</ul>
-
-							One does not simply add quality later
-						</aside>
-					</section>
-					<section data-background="assets/andy-excited.gif">
-						<h2>Faster development you say?</h2>
-						<aside class="notes">
-							<ul>
-								<li>Fewer bugs, less time squashing them</li>
-								<li>Forces you to better understand code base</li>
-								<li>Avoid building code on top of an unknown bug</li>
-							</ul>
-						</aside>
-					</section>
+					<h1>Behavior Driven Development (BDD)</h1>
 				</section>
 				<section>
 					<section>
-						<h2>Why your client should care about testing</h2>
+						<h2>Friction</h2>
+						<img src="assets/us-vs-them.png">
+					</section>
+					<section>
+						<h2>US</h2>
 						<ul>
-							<li>Better product quality</li>
-							<li>Less Regression</li>
-							<li>Better Acceptance Criteria</li>
-							<li><strong>Faster development</strong></li>
+							<li class="fragment" data-fragment-index="0">Large organization internal development team</li>
+							<li class="fragment" data-fragment-index="1">Digital consultant firm</li>
+							<li class="fragment" data-fragment-index="2">Product team</li>
 						</ul>
 						<aside class="notes">
 							<ul>
-								<li>Better product quality - better functioning product</li>
-								<li>Less Regression - Less time going back t fix bugs</li>
-								<li>Better Acceptance Criteria - Product better fits actually business needs</li>
-								<li>Greater understanding of product - </li>
-								<li><strong>Faster development</strong> - more bang for your buck</li>
+								<li>large teams, government agency, university department, newspapers</li>
+								<li>consult teams, mindgrub, kanopi, phase2, </li>
+								<li>product team</li>
 							</ul>
 						</aside>
 					</section>
+					<section>
+						<h2>The Client</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="0">Direct faces of the customers and users</li>
+							<li class="fragment" data-fragment-index="1">Knows that technology is a magically unicorn</li>
+							<li class="fragment" data-fragment-index="2">doesn't understand why the dev team keeps wanting to talk about blockers, standing up, and gobbledygook.</li>
+						</ul>
+						<aside class="notes">
+							The real people
+						</aside>
+					</section>
+					<section>
+						<h2>Management</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="0">Responsible for delivering the goods</li>
+							<li class="fragment" data-fragment-index="1">"Things keep going wrong"</li>
+							<ul>
+								<li class="fragment" data-fragment-index="2">"Maybe if we plan even more things will always go right"</li>
+							</ul>
+						</ul>
+					</section>
+					<section>
+						<h2>Poor Expectations</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="0">It's going to come in way over budget</li>
+							<li class="fragment" data-fragment-index="1">Not going to be on time</li>
+							<li class="fragment" data-fragment-index="2">Won't work as expected in production</li>
+							<li class="fragment" data-fragment-index="3">hard to maintain and update</li>
+							<li class="fragment" data-fragment-index="4">Not going to get good requirements</li>
+							<li class="fragment" data-fragment-index="5">Has unrealistic expectations</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Software Development</h2>
+						<div class="fragment" data-fragment-index="0" style="text-align:center; width:50%; background-color: #ff5e99; margin:15px auto;">Planning</div>
+						<div class="fragment" data-fragment-index="1" style="text-align:center; width:50%; background-color: #ff5e99; margin:15px auto;">Strategy</div>
+						<div class="fragment" data-fragment-index="2" style="text-align:center; width:50%; background-color: #ff5e99; margin:15px auto;">Design</div>
+						<div class="fragment" data-fragment-index="3" style="text-align:center; width:50%; background-color: #ff5e99; margin:15px auto;">Development</div>
+						<div class="fragment" data-fragment-index="4" style="text-align:center; width:50%; background-color: #ff5e99; margin:15px auto;">Testing</div>
+						<div class="fragment" data-fragment-index="5" style="text-align:center; width:50%; background-color: #ff5e99; margin:15px auto;">Deployment</div>
+					</section>
+					<section>
+						<img style="width: 100%;" src="assets/cost_curve.png" />
+					</section>
+					<section>
+						<h2>Common Challenges</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="0">Client can't really define desire outcome</li>
+							<li class="fragment" data-fragment-index="1">developer's understanding of what needs to be built</li>
+							<li class="fragment" data-fragment-index="2">client's understanding of technical implementations of the requirements</li>
+						</ul>
+					</section>
+					<!--<section>-->
+						<!--<h2>Seriously, There Be Dragons</h2>-->
+						<!--<img src="assets/used_features.jpg">-->
+						<!--<p>The Rise and Fall of the Chaos Report Figures</p>-->
+					<!--</section>-->
 				</section>
 				<section>
 					<section>
-						<h2>Why isn't everyone doing this testing thing?</h2>
-						<h4>Testing takes time</h4>
-						<p>Case studies conducted at Microsoft and IBM indicate that teams that adopt TDD experience 40% to 90% bugs, which results in 15-35% additional development time.</p>
+						<h2>BDD can help</h2>
+						<p class="fragment" data-fragment-index="0">Behavior Driven Development is about building software by describing its behaviors from the perspective of its stakeholders</p>
+						<p class="fragment" data-fragment-index="1">It describes a cycle of interactions with well defined outputs, resulting in the delivery of working, tested software, that actually matters.</p>
 					</section>
 					<section>
-						<h2>More Excuses</h2>
-						<h4>Writing good tests is hard</h4>
-						<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-							"Imperfect tests, run frequently, are much better than perfect tests that are never written at all." - Martin Fowler
-						</blockquote>
+						<h2>BDD perks</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="0">Clear communication</li>
+							<li class="fragment" data-fragment-index="1">Creates a shared language</li>
+							<li class="fragment" data-fragment-index="2">Captures intent of requirements</li>
+							<li class="fragment" data-fragment-index="3">More time on actual business needs</li>
+						</ul>
+						<aside class="notes">
+							<p>Additional benefits</p>
+							<ul>
+								<li>Creates clear communication between engineers and business professionals using a shared language</li>
+								<li>Captures intent and desired outcome of requirements in clear English (in our case)</li>
+								<li>Ensures all development effort is spent on delivering on actual business needs</li>
+								<li>design software that actually meets business needs</li>
+								<li>Meets the needs of the USER</li>
+								<li>Improved code quality, reducing time lost on maintenance</li>
+							</ul>
+						</aside>
 					</section>
+					<section>
+						<h2>It's All About Behaviors</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="0">Technology is enabler</li>
+							<li class="fragment" data-fragment-index="1">Wait no it's not. Technology is an inhibitor</li>
+							<li class="fragment" data-fragment-index="2">Technology should support human behaviors</li>
+						</ul>
+						<aside class="notes">
+							<p>Businesses should be focusing on their customers and business strategies, not technology.</p>
+							<p>Think of an online shop. It doesn't bring revenue in just by existing. It's users do. Software accomplishes business goals by supporting human behaviors.</p>
+						</aside>
+					</section><section>
+					<h2>It's All About Behaviors</h2>
+					<ul>
+						<li class="fragment" data-fragment-index="0">Technology is enabler</li>
+						<li class="fragment" data-fragment-index="1">Wait no it's not. Technology is an inhibitor</li>
+						<li class="fragment" data-fragment-index="2">Technology should support human behaviors</li>
+					</ul>
+					<aside class="notes">
+						<p>Businesses should be focusing on their customers and business strategies, not technology.</p>
+						<p>Think of an online shop. It doesn't bring revenue in just by existing. It's users do. Software accomplishes business goals by supporting human behaviors.</p>
+					</aside>
+				</section><section>
+					<h2>Behaviors</h2>
+					<p>Fancy word to test</p>
+					<aside class="notes">
+						<p>Businesses should be focusing on their customers and business strategies, not technology.</p>
+					</aside>
+				</section>
 				</section>
 				<section>
 					<section>
@@ -149,261 +213,97 @@ extensions:
 				</section>
 				<section>
 					<section>
-						<h2>Define Features</h2>
-						<img src="assets/file-structure.png" height="300"/>
-						<p>Tests are saved in .feature files</p>
+						<h2>Goals</h2>
+						<p class="fragment" data-fragment-index="0">Bad: I want to make more money.</p>
+						<img style="width:100%" class="fragment" data-fragment-index="1" src="assets/too_many_ads.png" />
 					</section>
 					<section>
-						<h2>User Login</h2>
-						<h4>Client Requirement</h4>
-						<pre><code data-trim contenteditable>
-I want to be able to log into my website in order to edit my content.
-        </code></pre>
+						<h2>Goals</h2>
+						<p  class="fragment" data-fragment-index="0">Good: I want to increase revenues by 12% over the next 12 months through our ecommerce store.</p>
+						<img class="fragment" data-fragment-index="1" src="assets/analytics.png"/>
 					</section>
 					<section>
-						<h2>User Login</h2>
-						<h4>Requirements we can use</h4>
-						<pre><code data-trim contenteditable>
-As a an anonymous user,
-I want to be able to log into my website,
-So that I can edit my content.
-</code></pre>
-						<aside class="notes">
-							3 lines that describe the role, the feature, and the benefit
-						</aside>
-					</section>
-					<section>
-						<h2>User Login</h2>
-						<h4>Acceptance Criteria</h4>
-						<p>What does it mean to be logged in? How do we know that we are logged in?</p>
-						<pre><code data-trim contenteditable>
-Given I am an anonymous user
-When I am at "user/login"
-And I fill in "name" with "admin"
-And I fill in "pass" with "admin"
-And press "Log in"
-Then I should see the link "Log out"
-</code></pre>
-						<aside class="notes">
-							Given [some context]
-							When [some event]
-							Then [outcome]
-						</aside>
-					</section>
-					<section>
-						<h2>User Login</h2>
-						<h4>Acceptance Criteria</h4>
-						<p>How do we check can edit content. </p>
-						<pre><code data-trim contenteditable>
-Given I am logged in as a user with the administrator role
-When I am at "node/add/page"
-Then I should see "Create Basic page"
-And I should get a 200 HTTP response
-</code></pre>
-					</section>
-					<section>
-						<h2>User Login</h2>
-						<p>Slap it in a feature file and boom you have your test.</p>
-						<pre><code data-trim contenteditable>
-#./features/user_login.feature
-@api
-Feature: User Login.
-  As a an anonymous user,
-  I want to be able to log into my website,
-  So that I can edit my content.
-
-Scenario: I can log in.
-  Given I am an anonymous user
-  When I am at "user/login"
-  And I fill in "name" with "admin"
-  And I fill in "pass" with "admin"
-  And press "Log in"
-  Then I should see the link "Log out"
-
-Scenario: I can edit content
-  Given I am logged in as a user with the administrator role
-  When I am at "node/add/page"
-  Then I should see "Create Basic page"
-  And I should get a 200 HTTP response
-</code></pre>
-						<aside class="notes">
-							<ul>
-								<li>Top Section: Describe the feature. Provides human context </li>
-								<li>Each feature is described by multiple scenarios - How the feature should act under certain conditions</li>
-								<li>Each of the scenario lines map to function that defines what actions to take.</li>
-							</ul>
-						</aside>
-					</section>
-					<section>
-						<h2>Executing tests</h2>
-						<pre><code data-trim contenteditable>
-$ bin/behat features/user_login.feature
-</code></pre>
-						<img src="assets/user-login-results.png" />
-					</section>
-				</section>
-
-				<section>
-					<section>
-						<h2>Events Feature</h2>
-						<pre><code data-trim contenteditable>
-    @api
-    Feature: Content Type Event
-        As an anonymous user
-        I want to view data related to an Event
-        So that I can decide it is something I would like to attend.
-
-    Scenario: Add an event node and verify that the necessary fields exist.
-        Given I am an anonymous user
-        And an "Event Terms" term with the name "camp"
-        And an "Event Terms" term with the name "drupal"
-        And "event" content:
-        | title | field_event_location | field_event_date | field_event_tags | status |
-        | Florida Drupal Camp | Orlando | 2015-04-11 9:00:00 | camp, drupal | 1 |
-        When I am at "content/florida-drupal-camp"
-        Then I should see the text "Florida Drupal Camp"
-        And I should see the text "Orlando"
-        And I should see the text "Saturday, April 11, 2015"
-        And I should see the text "camp"
-        And I should see the text "drupal"
-</code></pre>
+						<h2>Goals</h2>
+						<p>Business goals are specific, measurable, and are time bound</p>
 					</section>
 				</section>
 				<section>
 					<section>
-						<h2>Step Defintions</h2>
-						<p>Each scenario step maps to a function that performs the step</p>
-						<pre><code data-trim contenteditable>
-    Given I am an anonymous user
-</code></pre>
-						<pre><code data-trim contenteditable>
-/**
- * @Given I am an anonymous user
- * @Given I am not logged in
- */
- public function assertAnonymousUser() {
-   // Verify the user is logged out.
-   if ($this->loggedIn()) {
-   $this->logout();
- }
+						<h2>Plan with Examples (Behaviors)</h2>
+						<p class="fragment" data-fragment-index="0">Imagine we have an ecommerce shop</p>
+						<p class="fragment" data-fragment-index="1">Feature: Add sales tax and a delivery cost on checkout</p>
+						<pre class="fragment" data-fragment-index="2"><code data-trim contenteditable>
+Sales tax is 20%
 
+Delivery cost for small orders (less than $20) is $3
+
+Delivery cost for medium orders (more than $20) is $2
 </code></pre>
 					</section>
 					<section>
-						<h2>Step Definitions</h2>
-						<p>Out of the box the Mink and Drupal Drivers will provide a lot of step definitions that you can use.</p>
-						<pre><code data-trim contenteditable>
-    $ behat -dl
-</code></pre>
-						<pre><code data-trim contenteditable>
-default | When I visit the login page
-default | Given I am an anonymous user
-default | Given I am not logged in
-default | Given I am logged in as a user with the :role role(s)
-default | Given I am logged in as a user with the :role role(s) and I have the following fields:
-default | Given I am logged in as :name
-default | Given I am logged in as a user with the :permissions permission(s)
-default | Then I should see (the text ):text in the ":rowText" row
-default | Given I click :link in the :rowText row
-</code></pre>
+						<h2>Plan with Examples</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="0">What comes first: sales tax or deliver fee?</li>
+							<li class="fragment" data-fragment-index="1">What happens when orders are exactly $20?</li>
+							<li class="fragment" data-fragment-index="2">Ambiguity will lead to misunderstandings</li>
+						</ul>
 					</section>
 					<section>
-						<h2>Custom Step Definitions</h2>
+						<h2>Plan with Examples</h2>
 						<pre><code data-trim contenteditable>
-    Feature: Migrations
-    As an editor of the website
-    I want the workbench module enabled
-    So that I can create custom editing work flows
+Given a product is priced at $15, when I add it to the order,
+          then the total order price should be $21
 
+Given a product is priced at $25, when I add it to the order,
+          then the total order price should be $32
 
-    Scenario: Confirm the workbench module is installed
-        Given the "workbench" module is installed
+Given a product is priced at $20, when I add it to the order,
+          then the total order price should be $26
 </code></pre>
 					</section>
 					<section>
-						<h2>Custom Step Definitions</h2>
-						<p>Custom step definitions go in features/bootstrap/FeatureContext.php</p>
+						<h2>The magic words</h2>
 						<pre><code data-trim contenteditable>
-//features/bootstrap/FeatureContext.php
-use Drupal\DrupalExtension\Context\RawDrupalContext;
-use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
-
-/**
-* Defines application features from the specific context.
-*/
-class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
-{
-
-}
-        </code></pre>
+Given [initial context for the example]
+When [action that the actor in the system or stakeholder performs]
+Then [expected outcome of that action]
+</code></pre>
 					</section>
 					<section>
-						<h2>Custom Step Defintions</h2>
-						<pre><code data-trim contenteditable>
-/**
- * Asserts that a given module exists and is enabled.
- *
- * @Given the :module module is installed
- */
- public function assertModuleExists($module)
- {
-   if (module_exists($module)) {
-   return TRUE;
- }
-
-  $message = sprintf('Module "%s" is not installed.', $module);
-  throw new \Exception($message);
-}
-        </code></pre>
-						<aside class="notes">
-							By extending the drupal extension we get access to a bootstrapped drupal as well as any methods they've already defined, like nodeCreate() and login()
-						</aside>
+						<h2>Drupal Example with the magic words</h2>
+						<p class="fragment" data-fragment-index="0">I want to be able to create and edit content on my site to inform the world that dogs are objectively better then cats.</p>
+						<pre class="fragment" data-fragment-index="1"><code data-trim contenteditable>
+Given I am an admin of the site
+When I log in
+Then I should be able to create content
+</code></pre>
 					</section>
 					<section>
-						<h2>More custom defintions</h2>
-						<pre><code data-trim contenteditable>
-            Then "events" migration is complete$/
-        </code></pre>
-						<pre><code data-trim contenteditable>
-/**
- * Asserts the given migration is complete.
- *
- * @Then /^the "([^"]*)" migration is complete$/
- *
- * @throws /Exception if the migration did not complete.
- */
- public function assertMigrationIsComplete($name)
- {
-   $migration = Migration::getInstance($name);
-   if ($migration->isComplete()) {
-     return TRUE;
-   }
-   $message = sprintf('The "%s" migration is not complete.', $name);
-   throw new \Exception($message);
-}
-        </code></pre>
+						<p>Sweet sweet Demo</p>
 					</section>
 				</section>
 				<section>
-					<h2>Doing things in the browser</h2>
-					<p>We use Mink to interact with the browser</p>
-					<p>Some common usages of the Mink API</p>
-					<pre><code data-trim contenteditable>
-$element = $session->getPage();
-
-$element->findAll($selector, $locator);
-$element->getText();
-$element->getHtml();
-
-$element->isVisible();
-$element->click();
-$element->press();
-$element->check();
-$element->uncheck();
-</code></pre>
-					<a href="http://blog.lepine.pro/images/2012-03-behat-cheat-sheet-en.pdf">Mink Cheat Sheet</a>
+					<section>
+						<h2>In Review</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="0">We implement <strong>stories</strong></li>
+							<li class="fragment" data-fragment-index="1">that make up <strong>features</strong></li>
+							<li class="fragment" data-fragment-index="2">the enable <strong>capabilities</strong></li>
+							<li class="fragment" data-fragment-index="3">that deliver <strong>outcomes</strong></li>
+						</ul>
+						<h3 class="fragment" data-fragment-index="4">and we stop!</h3>
+					</section>
+					<section>
+						<h2>Costs</h2>
+						<p class="fragment" data-fragment-index="0">Only pay for what for what features are used. A pay per <strong>capability</strong>model.</p>
+						<p class="fragment" data-fragment-index="1">Stop and ship as soon as we're done</p>
+					</section>
+					<section>
+						<h2>Risks</h2>
+						<p class="fragment" data-fragment-index="0">Regular Delivery, Regular Feedback</p>
+						<p class="fragment" data-fragment-index="1">Measure results</p>
+						<p class="fragment" data-fragment-index="2">Know what "DONE" is</p>
+					</section>
 				</section>
 				<section style="text-align: left;">
 					<h1>THE END</h1>
@@ -412,7 +312,7 @@ $element->uncheck();
 						- tests are good for you, the client, and the product
 					</p>
 					<p>
-						- <a href="http://docs.behat.org/en/v2.5/">Behat Documentation</a> <br>
+						- <a href="http://docs.behat.org/en/latest/">Behat Documentation</a> <br>
 						- <a href="https://github.com/aczietlow/Scylla">Behat in a box</a> <br>
 						- Follow me on twitter: <a href="https://twitter.com/aczietlow">@aczietlow</a>
 					</p>
