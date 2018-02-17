@@ -29,11 +29,11 @@
 				<div class="left">
 					<img src="assets/mindgrub-logo.png"/>
 				</div>
-				<div class="right">
-					<span><a href="https://www.drupal.org/u/aczietlow">Chris Zietlow</a></span>
-					<span><a href="http://aczietlow.github.io/behat/">Intro to Behat</a></span>
-					<span><a href="https://twitter.com/aczietlow">@aczietlow</a></span>
-				</div>
+				<!--<div class="right">-->
+					<!--<span><a href="https://www.drupal.org/u/aczietlow">Chris Zietlow</a></span>-->
+					<!--<span><a href="http://aczietlow.github.io/behat/">Intro to Behat</a></span>-->
+					<!--<span><a href="https://twitter.com/aczietlow">@aczietlow</a></span>-->
+				<!--</div>-->
 				<aside class="notes">
 					<p>Talk about people not tech. Gasp!</p>
 				</aside>
@@ -41,6 +41,7 @@
 			<div class="slides">
 				<section>
 					<h1>Behavior Driven Development (BDD)</h1>
+					<a href="https://www.drupal.org/u/aczietlow">Chris Zietlow</a>
 				</section>
 				<section>
 					<section>
@@ -113,6 +114,16 @@
 							<li class="fragment" data-fragment-index="1">developer's understanding of what needs to be built</li>
 							<li class="fragment" data-fragment-index="2">client's understanding of technical implementations of the requirements</li>
 						</ul>
+					</section>
+					<section data-background="assets/andy-excited.gif">
+						<h2>Faster development you say?</h2>
+						<aside class="notes">
+							<ul>
+								<li>Fewer bugs, less time squashing them</li>
+								<li>Forces you to better understand code base</li>
+								<li>Avoid building code on top of an unknown bug</li>
+							</ul>
+						</aside>
 					</section>
 					<!--<section>-->
 						<!--<h2>Seriously, There Be Dragons</h2>-->
@@ -209,6 +220,101 @@ extensions:
     Behat\MinkExtension:
 </code></pre>
 						<a href="#">Use your google powers</a>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Define Features</h2>
+						<img src="assets/file-structure.png" height="300"/>
+						<p>Tests are saved in .feature files</p>
+					</section>
+					<section>
+						<h2>User Login</h2>
+						<h4>Client Requirement</h4>
+						<pre><code data-trim contenteditable>
+I want to be able to log into my website in order to edit my content.
+        </code></pre>
+					</section>
+					<section>
+						<h2>User Login</h2>
+						<h4>Requirements we can use</h4>
+						<pre><code data-trim contenteditable>
+As a an anonymous user,
+I want to be able to log into my website,
+So that I can edit my content.
+</code></pre>
+						<aside class="notes">
+							3 lines that describe the role, the feature, and the benefit
+						</aside>
+					</section>
+					<section>
+						<h2>User Login</h2>
+						<h4>Acceptance Criteria</h4>
+						<p>What does it mean to be logged in? How do we know that we are logged in?</p>
+						<pre><code data-trim contenteditable>
+Given I am an anonymous user
+When I am at "user/login"
+And I fill in "name" with "admin"
+And I fill in "pass" with "admin"
+And press "Log in"
+Then I should see the link "Log out"
+</code></pre>
+						<aside class="notes">
+							Given [some context]
+							When [some event]
+							Then [outcome]
+						</aside>
+					</section>
+					<section>
+						<h2>User Login</h2>
+						<h4>Acceptance Criteria</h4>
+						<p>How do we check can edit content. </p>
+						<pre><code data-trim contenteditable>
+Given I am logged in as a user with the administrator role
+When I am at "node/add/page"
+Then I should see "Create Basic page"
+And I should get a 200 HTTP response
+</code></pre>
+					</section>
+					<section>
+						<h2>User Login</h2>
+						<p>Slap it in a feature file and boom you have your test.</p>
+						<pre><code data-trim contenteditable>
+#./features/user_login.feature
+@api
+Feature: User Login.
+  As a an anonymous user,
+  I want to be able to log into my website,
+  So that I can edit my content.
+
+Scenario: I can log in.
+  Given I am an anonymous user
+  When I am at "user/login"
+  And I fill in "name" with "admin"
+  And I fill in "pass" with "admin"
+  And press "Log in"
+  Then I should see the link "Log out"
+
+Scenario: I can edit content
+  Given I am logged in as a user with the administrator role
+  When I am at "node/add/page"
+  Then I should see "Create Basic page"
+  And I should get a 200 HTTP response
+</code></pre>
+						<aside class="notes">
+							<ul>
+								<li>Top Section: Describe the feature. Provides human context </li>
+								<li>Each feature is described by multiple scenarios - How the feature should act under certain conditions</li>
+								<li>Each of the scenario lines map to function that defines what actions to take.</li>
+							</ul>
+						</aside>
+					</section>
+					<section>
+						<h2>Executing tests</h2>
+						<pre><code data-trim contenteditable>
+$ bin/behat features/user_login.feature
+</code></pre>
+						<img src="assets/user-login-results.png" />
 					</section>
 				</section>
 				<section>
